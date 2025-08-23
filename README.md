@@ -1,6 +1,7 @@
 # optimistic-update-training
 
-GitHubのコントリビューション（草）表示と、TanStack Queryの楽観的更新学習用の土台です。
+TanStack Queryで楽観的更新を学習するために、Githubのコントリビュートを取得
+![表紙](preview.png)
 
 ## セットアップ
 
