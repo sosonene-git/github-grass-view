@@ -1,0 +1,37 @@
+/* Modern rounded input with subtle shadow and focus ring */
+.input {
+    width: 320px;
+    max-width: 80vw;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(16, 24, 40, 0.06);
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 6px 24px rgba(16, 24, 40, 0.04);
+    font-size: 16px;
+    color: #0f172a;
+    outline: none;
+    transition: box-shadow 160ms ease, transform 120ms ease, border-color 120ms ease;
+}
+
+.input::placeholder {
+    color: #94a3b8;
+}
+
+.input:focus {
+    border-color: rgba(255, 107, 107, 0.9);
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.08), 0 0 0 6px rgba(255, 107, 107, 0.08);
+    transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: dark) {
+    .input {
+        background: #edf1fd;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: #565050;
+        box-shadow: 0 1px 2px rgba(2, 6, 23, 0.4);
+    }
+
+    .input::placeholder {
+        color: #94a3b8;
+    }
+}

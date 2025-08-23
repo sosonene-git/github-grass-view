@@ -1,0 +1,29 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.gridWrapper {}
+
+.grid {
+    display: grid;
+    gap: 3px;
+}
+
+.cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.emptyMessage {
+    color: #6b7280;
+}

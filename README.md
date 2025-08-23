@@ -1,24 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# optimistic-update-training
 
-## Getting Started
+GitHubのコントリビューション（草）表示と、TanStack Queryの楽観的更新学習用の土台です。
 
-First, run the development server:
+## セットアップ
+
+1. 環境変数を設定
+
+`.env.example` を `.env.local` にコピーし、`GITHUB_TOKEN` に GitHub の Personal Access Token（最低 `read:user`）を設定します。
+
+1. 開発サーバー起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで <http://localhost:3000> を開き、ユーザー名を入力すると草が表示されます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+開発サーバーの詳細は Next.js ドキュメントを参照してください。
 
 ## Learn More
 
