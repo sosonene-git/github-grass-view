@@ -1,6 +1,6 @@
-# optimistic-update-training
+# github-grass-view
 
-TanStack Queryで楽観的更新を学習するために、Githubのコントリビュートを取得
+Githubのcontributionsを取得して、表示するだけのリポジトリ
 ![表紙](preview.png)
 
 ## セットアップ
