@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import GithubGrass from "./components/grass/index.";
-import Header from "./components/header";
-import Input from "./components/ui/input";
+import { GithubGrass } from "./components/grass/index.";
+import { Header } from "./components/header";
+import { Input } from "./components/ui/input";
 
 export default function Home() {
   const [username, setUsername] = useState("");

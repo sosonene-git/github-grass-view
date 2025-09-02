@@ -6,7 +6,9 @@ type InputProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ placeholder, value, onChange }: InputProps) => {
+export const Input = (props: InputProps) => {
+    const { placeholder, value, onChange } = props;
+
     return (
         <input
             type="text"
@@ -18,4 +20,3 @@ const Input = ({ placeholder, value, onChange }: InputProps) => {
     );
 };
 
-export default Input;

@@ -4,7 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchGithubContributions } from "../../githubApi";
 import styles from "./style.module.css";
 
-export default function GithubGrass({ username }: { username: string }) {
+type GithubGrassProps = {
+    username: string;
+};
+
+export const GithubGrass = (props: GithubGrassProps) => {
+    const { username } = props;
+
     const { data, isLoading, error } = useQuery({
         queryKey: ["github-contributions", username],
         queryFn: () => fetchGithubContributions(username),
