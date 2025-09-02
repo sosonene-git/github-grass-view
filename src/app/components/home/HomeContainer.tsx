@@ -7,14 +7,14 @@ import { Input } from "../ui/input";
 import styles from "./style.module.css";
 
 export const Home = () => {
-    const [username, setUsername] = useState("");
+    const [userName, setUserName] = useState("");
 
     return (
         <main className={styles.homeContainer}>
             <Header />
-            <Input value={username} onChange={(e) => setUsername(e.target.value)} />
+            <Input value={userName} onChange={(e) => setUserName(e.target.value)} />
             <div className={styles.grassContainer}>
-                <GithubGrass username={username} />
+                <GithubGrass username={userName} />
             </div>
         </main>
     );
