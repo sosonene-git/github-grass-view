@@ -1,0 +1,14 @@
+.homeContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    gap: 16px;
+}
+
+.grassContainer {
+    width: 820px;
+    min-width: 95%;
+}
