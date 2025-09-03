@@ -4,11 +4,11 @@ const GITHUB_GRAPHQL_ENDPOINT = "https://api.github.com/graphql";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
-    const raw = searchParams.get("username") ?? "";
-    const username = raw.trim();
+    const raw = searchParams.get("userName") ?? "";
+    const userName = raw.trim();
 
-    // username 未指定でも 200 で空配列を返す（UI を静かに保つ）
-    if (!username) {
+    // user Name 未指定でも 200 で空配列を返す（UI を静かに保つ）
+    if (!userName) {
         return NextResponse.json({ total: 0, contributions: [] });
     }
 
@@ -45,7 +45,7 @@ export async function GET(req: Request) {
   `;
 
     const variables = {
-        login: username,
+        login: userName,
         from: from.toISOString(),
         to: to.toISOString(),
     } as const;

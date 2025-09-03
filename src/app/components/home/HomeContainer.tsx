@@ -14,7 +14,7 @@ export const Home = () => {
             <Header />
             <Input value={userName} onChange={(e) => setUserName(e.target.value)} />
             <div className={styles.grassContainer}>
-                <GithubGrass username={userName} />
+                <GithubGrass userName={userName} />
             </div>
         </main>
     );

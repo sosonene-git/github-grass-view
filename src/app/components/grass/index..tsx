@@ -5,21 +5,21 @@ import { fetchGithubContributions } from "../../githubApi";
 import styles from "./style.module.css";
 
 type GithubGrassProps = {
-    username: string;
+    userName: string;
 };
 
 export const GithubGrass = (props: GithubGrassProps) => {
-    const { username } = props;
+    const { userName } = props;
 
     const { data, isLoading, error } = useQuery({
-        queryKey: ["github-contributions", username],
-        queryFn: () => fetchGithubContributions(username),
-        enabled: !!username,
+        queryKey: ["github-contributions", userName],
+        queryFn: () => fetchGithubContributions(userName),
+        enabled: !!userName,
     });
 
     // メッセージは出すが、グリッド自体は常に表示する
     let statusMessage: string | null = null;
-    if (!username) statusMessage = "ユーザー名を入力してください";
+    if (!userName) statusMessage = "ユーザー名を入力してください";
     else if (isLoading) statusMessage = "読み込み中...";
     else if (error) statusMessage = "エラーが発生しました";
 
@@ -33,7 +33,7 @@ export const GithubGrass = (props: GithubGrassProps) => {
     // day は { date, count } または GraphQL の contributionDays の shape を想定
     return (
         <div className={styles.root}>
-            <h2 className={styles.title}>{data && <span>{username} の contributions</span>}</h2>
+            <h2 className={styles.title}>{data && <span>{userName} の contributions</span>}</h2>
             <div className={styles.gridWrapper}>
                 <div className={styles.grid} style={{ gridTemplateColumns: `repeat(53, 8px)` }}>
                     {contributions.map((week: any, i: number) =>
