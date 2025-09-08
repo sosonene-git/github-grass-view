@@ -23,6 +23,59 @@
     transform: translateY(-1px);
 }
 
+.inputWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    right: 50%;
+    transform: translateX(50%) translateY(-8px);
+    background: rgba(15, 23, 42, 0.95);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(2, 6, 23, 0.35);
+    transition: opacity 80ms ease, transform 80ms ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(15, 23, 42, 0.95);
+}
+
+.input.withIcon {
+    padding-right: 40px;
+}
+
 @media (prefers-color-scheme: dark) {
     .input {
         background: #edf1fd;
