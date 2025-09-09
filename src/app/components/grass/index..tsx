@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchGithubContributions } from "../../githubApi";
 import styles from "./style.module.css";
 import { WEEKDAYS } from "@/app/constans/date";
+import { calcContributionColor } from "@/app/constans/colors";
 
 type GithubGrassProps = {
     userName: string;
@@ -95,24 +96,12 @@ export const GithubGrass = (props: GithubGrassProps) => {
                         <div className={styles.grid} style={{ gridTemplateColumns: `repeat(${contributions.length}, ${CELL_SIZE}px)`, gridTemplateRows: `repeat(7, ${CELL_SIZE}px)` }}>
                             {contributions.map((week: any, i: number) =>
                                 week.map((day: any, j: number) => {
-                                    // day may have different shapes: { date, count } or { date, contributionCount, color }
                                     const rawCount = day.count ?? day.contributionCount ?? 0;
                                     const count = Number(rawCount) || 0;
                                     const githubColor = day.color;
 
-                                    // カウントがゼロのマスは常に薄いグレーにする（GitHub color が来ていても上書き）
-                                    let background: string;
-                                    if (count === 0) {
-                                        background = "#dfe1e4";
-                                    } else if (githubColor) {
-                                        background = githubColor;
-                                    } else if (count <= 1) {
-                                        background = "#9be9a8";
-                                    } else if (count <= 3) {
-                                        background = "#40c463";
-                                    } else {
-                                        background = "#216e39";
-                                    }
+                                    // 背景色は共通関数で算出
+                                    const background = calcContributionColor(count, githubColor);
 
                                     return (
                                         <div
@@ -129,6 +118,7 @@ export const GithubGrass = (props: GithubGrassProps) => {
                                 })
                             )}
                         </div>
+
                         {/* 月境界ライン */}
                         <div className={styles.monthBoundaries} style={{ height: (CELL_SIZE * 7) + (GAP * 6) }}>
                             {monthBoundaryIndices.map(idx => (
