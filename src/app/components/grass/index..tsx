@@ -5,6 +5,7 @@ import { fetchGithubContributions } from "../../githubApi";
 import styles from "./style.module.css";
 import { WEEKDAYS } from "@/app/constans/date";
 import { calcContributionColor } from "@/app/constans/colors";
+import GrowthChart, { GrowthPoint } from "@/app/components/growth-chart";
 
 type GithubGrassProps = {
     userName: string;
@@ -63,6 +64,33 @@ export const GithubGrass = (props: GithubGrassProps) => {
 
     // 月境界（最初の月は除外）
     const monthBoundaryIndices = monthLabels.map(m => m.index).filter(i => i !== 0);
+
+    // 週次合計と成長率を算出
+    const weeklyTotals: { start: string; total: number }[] = contributions.map((week: any) => {
+        const total = week.reduce((sum: number, d: any) => sum + (Number(d?.count ?? d?.contributionCount ?? 0) || 0), 0);
+        const firstWithDate = week.find((d: any) => d?.date);
+        // 週の最後の日付をラベルに使う（最新週のラベルが正しく最新日になるようにする）
+        const lastWithDate = [...week].slice().reverse().find((d: any) => d?.date);
+        // fallback: last -> first -> empty
+        const start = lastWithDate?.date ?? firstWithDate?.date ?? "";
+        return { start, total };
+    });
+
+    // 直近の52週だけに限定（多すぎると視認性低下）
+    const trimmed = weeklyTotals.slice(-52);
+    const growthSeries: GrowthPoint[] = trimmed.map((w, idx) => {
+        if (idx === 0) return { label: w.start, value: null };
+        const prev = trimmed[idx - 1];
+        // 前週が0の場合、100%基準だと無限大になるため、差分ベースに切り替え: (curr - prev) * 100 if prev==0?
+        // ここでは安全策として、prevが0なら 0/0 = 0% とする（実質的に比較不能のため）
+        if (!prev || prev.total === 0) {
+            const diff = w.total - (prev?.total ?? 0);
+            return { label: w.start, value: diff === 0 ? 0 : (diff > 0 ? 100 : -100) };
+        }
+        const growth = ((w.total - prev.total) / prev.total) * 100;
+        // 小数1桁に丸めは表示側でやるが、データは生で保持
+        return { label: w.start, value: Number.isFinite(growth) ? growth : null };
+    });
 
     // contributions: data.contributions (2次元配列)
     // GraphQL から来る色情報があれば優先して使い、なければ count に基づいて色を決める
@@ -132,6 +160,15 @@ export const GithubGrass = (props: GithubGrassProps) => {
                     </div>
                 </div>
             </div>
+
+            {/* 週次成長率の折れ線グラフ */}
+            {data && (
+                <div style={{ marginTop: 16, width: "100%", display: "flex", justifyContent: "center" }}>
+                    <div style={{ width: "min(100%, 720px)" }}>
+                        <GrowthChart data={growthSeries} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
