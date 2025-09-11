@@ -6,6 +6,7 @@ import styles from "./style.module.css";
 import { WEEKDAYS } from "@/app/constans/date";
 import { calcContributionColor } from "@/app/constans/colors";
 import GrowthChart, { GrowthPoint } from "@/app/components/growth-chart";
+import calcMonthLabels from "./helper";
 
 type GithubGrassProps = {
     userName: string;
@@ -35,32 +36,8 @@ export const GithubGrass = (props: GithubGrassProps) => {
         ? data.contributions
         : Array.from({ length: 53 }, () => Array.from({ length: 7 }, () => ({ date: "", count: 0 })));
 
-    // 月ラベルを計算する（各週の最初の日を見て月が変わったところにラベルを置く）
-    const monthLabels: { label: string; index: number }[] = [];
-    let lastMonth: number | null = null;
-    contributions.forEach((week: any, i: number) => {
-        console.log("week", week)
-
-        // 各週の最初の日を見て月が変わったところにラベルを置く
-        const firstWithDate = week.find((d: any) => d?.date);
-
-        // 最初の日付が見つからない場合はスキップ
-        if (!firstWithDate) return;
-
-        const dt = new Date(firstWithDate.date);
-
-        // 日付が不正な場合はスキップ
-        if (isNaN(dt.getTime())) return;
-
-        // 月が変わったところにラベルを置く
-        const m = dt.getMonth();
-
-        // 最初の月は必ずラベルを置く
-        if (m !== lastMonth) {
-            monthLabels.push({ label: dt.toLocaleString("en-US", { month: "short" }), index: i });
-            lastMonth = m;
-        }
-    });
+    // 月ラベルを計算
+    const monthLabels = calcMonthLabels(contributions);
 
     // 月境界（最初の月は除外）
     const monthBoundaryIndices = monthLabels.map(m => m.index).filter(i => i !== 0);
